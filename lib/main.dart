@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:queue/grpc/grpc.dart';
 
@@ -28,6 +30,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _queue;
   int _currentQueue = 0;
+  Timer loopUpdater;
 
   @override
   Widget build(BuildContext context) {
@@ -118,6 +121,10 @@ class _MyHomePageState extends State<MyHomePage> {
         print(value);
         setState(() => _currentQueue = value.queue);
       });
+    });
+    Timer.periodic(const Duration(seconds: 1), (timer) async {
+      final buf = await grpc.LoadQueue();
+      setState(() => _currentQueue = buf);
     });
   }
 
