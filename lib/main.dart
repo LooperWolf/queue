@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:queue/grpc/grpc.dart';
 
@@ -31,162 +32,105 @@ class _MyHomePageState extends State<MyHomePage> {
   int _queue;
   int _currentQueue = 0;
   Timer loopUpdater;
+  double _screenWidth;
+  double _screenHeight;
+  MediaQueryData get queryData => MediaQuery.of(context);
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _screenHeight = queryData.size.height;
+    _screenWidth = queryData.size.width;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveWidget(
-      largeScreen: largeScreen(),
-      smallScreen: smallScreen(),
-    );
-  }
-
-  Widget smallScreen() {
-    return Scaffold(
-        body: Center(
-            child: Stack(
-      children: [
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 20),
-                child: Text(
-                  'Current Queue',
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.black54,
-                ),
-                height: 300,
-                width: 200,
-                child: Center(
-                  child: Text(
-                    _currentQueue.toString(),
-                    style: const TextStyle(fontSize: 60, color: Colors.white),
-                  ),
-                ),
-              ),
-              Container(
-                  margin: const EdgeInsets.only(top: 20),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: Colors.black26,
-                      )),
-                  height: 100,
-                  width: 200,
-                  child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 1000),
-                    reverseDuration: const Duration(milliseconds: 50),
-                    child: _yourQueue(),
-                  )),
-            ],
-          ),
-        ),
-        Align(
-            alignment: Alignment(0.5, 0),
-            child: Container(
-                margin: const EdgeInsets.only(top: 20, right: 20),
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: Colors.black26,
-                    )),
-                child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 1000),
-                  reverseDuration: const Duration(milliseconds: 50),
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () {
-                      grpc.UpdateQueue();
-                    },
-                    child: const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20),
-                        child: Icon(Icons.arrow_upward)),
-                  ),
-                ))),
-      ],
-    )));
+    return largeScreen();
   }
 
   Widget largeScreen() {
     return Scaffold(
-        body: Center(
-            child: Stack(
+        body: Row(
       children: [
-        Center(
+        const Spacer(),
+        const SizedBox(
+          width: 80,
+        ),
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          height: _screenHeight,
+          width: 200,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 20),
-                child: Text(
+                child: AutoSizeText(
                   'Current Queue',
+                  maxLines: 1,
                   style: TextStyle(fontSize: 40),
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.black54,
-                ),
-                height: 500,
-                width: 400,
-                child: Center(
-                  child: Text(
+              Expanded(
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.black54,
+                  ),
+                  child: AutoSizeText(
                     _currentQueue.toString(),
-                    style: const TextStyle(fontSize: 60, color: Colors.white),
+                    maxLines: 1,
+                    style: const TextStyle(fontSize: 100, color: Colors.white),
                   ),
                 ),
               ),
-              Container(
-                  margin: const EdgeInsets.only(top: 20),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: Colors.black26,
-                      )),
-                  height: 200,
-                  width: 400,
-                  child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 1000),
-                    reverseDuration: const Duration(milliseconds: 50),
-                    child: _yourQueue(),
-                  )),
+              Flexible(
+                child: Container(
+                    margin: const EdgeInsets.only(top: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: Colors.black26,
+                        )),
+                    constraints: const BoxConstraints(
+                      maxHeight: 100,
+                    ),
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 1000),
+                      reverseDuration: const Duration(milliseconds: 50),
+                      child: _yourQueue(),
+                    )),
+              ),
             ],
           ),
         ),
-        Align(
-          alignment: Alignment(0.5, 0),
-          child: Container(
-              margin: const EdgeInsets.only(top: 20, right: 20),
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: Colors.black26,
-                  )),
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 1000),
-                reverseDuration: const Duration(milliseconds: 50),
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    grpc.UpdateQueue();
-                  },
-                  child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 20),
-                      child: Icon(Icons.arrow_upward)),
-                ),
-              )),
-        ),
+        Container(
+            margin: const EdgeInsets.only(top: 20, right: 20),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: Colors.black26,
+                )),
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 1000),
+              reverseDuration: const Duration(milliseconds: 50),
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  grpc.UpdateQueue();
+                },
+                child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    child: Icon(Icons.arrow_upward)),
+              ),
+            )),
+        const Spacer()
       ],
-    )));
+    ));
   }
 
   @override
@@ -224,13 +168,13 @@ class _MyHomePageState extends State<MyHomePage> {
             });
             _queueing = false;
           },
-          child: const Padding(
-            padding: EdgeInsets.symmetric(vertical: 20),
-            child: Center(
-              child: Text(
-                'Take Your Queue',
-                style: TextStyle(fontSize: 20),
-              ),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            alignment: Alignment.center,
+            child: const AutoSizeText(
+              'Take Your Queue',
+              maxLines: 1,
+              style: TextStyle(fontSize: 20),
             ),
           ),
         );
@@ -238,15 +182,17 @@ class _MyHomePageState extends State<MyHomePage> {
       return Column(children: [
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 20),
-          child: Text(
+          child: AutoSizeText(
             'Your Queue',
+            maxLines: 1,
             style: TextStyle(fontSize: 20),
           ),
         ),
         Expanded(
           child: Center(
-            child: Text(
+            child: AutoSizeText(
               _queue.toString(),
+              maxLines: 1,
               style: const TextStyle(fontSize: 30),
             ),
           ),
@@ -268,8 +214,9 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Padding(
           padding: EdgeInsets.symmetric(vertical: 20),
           child: Center(
-            child: Text(
+            child: AutoSizeText(
               'Take Your Queue',
+              maxLines: 1,
               style: TextStyle(fontSize: 40),
             ),
           ),
@@ -279,15 +226,17 @@ class _MyHomePageState extends State<MyHomePage> {
     return Column(children: [
       const Padding(
         padding: EdgeInsets.symmetric(vertical: 20),
-        child: Text(
+        child: AutoSizeText(
           'Your Queue',
+          maxLines: 1,
           style: TextStyle(fontSize: 40),
         ),
       ),
       Expanded(
         child: Center(
-          child: Text(
+          child: AutoSizeText(
             _queue.toString(),
+            maxLines: 1,
             style: const TextStyle(fontSize: 60),
           ),
         ),
