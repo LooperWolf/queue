@@ -98,6 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
         behavior: CustomScrollBehavior(),
         child: SingleChildScrollView(
           child: Wrap(
+            alignment: WrapAlignment.center,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               if (queueList.isNotEmpty) _queuelist(),
@@ -180,6 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           setState(() {
                                             _currentQueue = buf.queue;
                                             queueList = buf.queuelist;
+                                            _queue = null;
                                           });
                                         },
                                         child:
