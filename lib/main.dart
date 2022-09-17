@@ -53,9 +53,6 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Row(
       children: [
         const Spacer(),
-        const SizedBox(
-          width: 80,
-        ),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
           height: _screenHeight,
@@ -63,12 +60,14 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 20),
-                child: AutoSizeText(
-                  'Current Queue',
-                  maxLines: 1,
-                  style: TextStyle(fontSize: 40),
+              const Flexible(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: AutoSizeText(
+                    'Current Queue',
+                    maxLines: 1,
+                    style: TextStyle(fontSize: 40),
+                  ),
                 ),
               ),
               Expanded(
@@ -107,28 +106,29 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
-        Container(
-            margin: const EdgeInsets.only(top: 20, right: 20),
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color: Colors.black26,
+        Expanded(
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+                margin: const EdgeInsets.only(top: 20, right: 20),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: Colors.black26,
+                    )),
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    grpc.UpdateQueue();
+                  },
+                  child: const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      child: Icon(Icons.arrow_upward)),
                 )),
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 1000),
-              reverseDuration: const Duration(milliseconds: 50),
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  grpc.UpdateQueue();
-                },
-                child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: Icon(Icons.arrow_upward)),
-              ),
-            )),
-        const Spacer()
+          ),
+        ),
       ],
     ));
   }
@@ -155,50 +155,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   bool _queueing = false;
   Widget _yourQueue() {
-    if (ResponsiveWidget.isSmallScreen(context)) {
-      if (_queue == null) {
-        return GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () async {
-            if (_queueing) return;
-            _queueing = true;
-            final buf = await grpc.GetQueue();
-            setState(() {
-              _queue = buf;
-            });
-            _queueing = false;
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-            alignment: Alignment.center,
-            child: const AutoSizeText(
-              'Take Your Queue',
-              maxLines: 1,
-              style: TextStyle(fontSize: 20),
-            ),
-          ),
-        );
-      }
-      return Column(children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 20),
-          child: AutoSizeText(
-            'Your Queue',
-            maxLines: 1,
-            style: TextStyle(fontSize: 20),
-          ),
-        ),
-        Expanded(
-          child: Center(
-            child: AutoSizeText(
-              _queue.toString(),
-              maxLines: 1,
-              style: const TextStyle(fontSize: 30),
-            ),
-          ),
-        )
-      ]);
-    }
     if (_queue == null) {
       return GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -211,37 +167,26 @@ class _MyHomePageState extends State<MyHomePage> {
           });
           _queueing = false;
         },
-        child: const Padding(
-          padding: EdgeInsets.symmetric(vertical: 20),
-          child: Center(
-            child: AutoSizeText(
-              'Take Your Queue',
-              maxLines: 1,
-              style: TextStyle(fontSize: 40),
-            ),
+        child: Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: const AutoSizeText(
+            'Take Your Queue',
+            maxLines: 1,
+            style: TextStyle(fontSize: 40),
           ),
         ),
       );
     }
-    return Column(children: [
-      const Padding(
-        padding: EdgeInsets.symmetric(vertical: 20),
-        child: AutoSizeText(
-          'Your Queue',
-          maxLines: 1,
-          style: TextStyle(fontSize: 40),
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+      child: AutoSizeText(
+        'Your Queue\n\n$_queue',
+        maxLines: 3,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 20),
       ),
-      Expanded(
-        child: Center(
-          child: AutoSizeText(
-            _queue.toString(),
-            maxLines: 1,
-            style: const TextStyle(fontSize: 60),
-          ),
-        ),
-      )
-    ]);
+    );
   }
 }
 
