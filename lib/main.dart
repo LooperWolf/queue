@@ -51,9 +51,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _queuelist() {
     final buf = queueList.entries.toList();
+    buf.sort(
+      (a, b) => a.value.compareTo(b.value),
+    );
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       decoration: BoxDecoration(border: Border.all()),
+      constraints: BoxConstraints(maxHeight: _screenHeight / 2),
+      width: 200,
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -62,8 +67,10 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               color: Colors.purple[300],
+              width: 200,
               child: const Text(
                 "Current Queue List",
+                textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white),
               ),
             ),
@@ -77,9 +84,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _queuelistRow(String name, int queue, int index) {
     return Container(
+      width: 200,
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-      color: index % 2 == 0 ? Colors.white : Colors.grey[400],
-      child: Text("$name: $queue"),
+      color: index % 2 == 0 ? Colors.white : Colors.grey[300],
+      child: Text(
+        "$name: $queue",
+        textAlign: TextAlign.center,
+      ),
     );
   }
 
