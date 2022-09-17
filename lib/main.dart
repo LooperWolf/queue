@@ -60,10 +60,11 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Flexible(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  child: AutoSizeText(
+              Flexible(
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                  child: const AutoSizeText(
                     'Current Queue',
                     maxLines: 1,
                     style: TextStyle(fontSize: 40),
@@ -100,7 +101,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 1000),
                       reverseDuration: const Duration(milliseconds: 50),
-                      child: _yourQueue(),
+                      child: LayoutBuilder(builder: (context, constraint) {
+                        return _yourQueue(constraint);
+                      }),
                     )),
               ),
             ],
@@ -112,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Container(
                 margin: const EdgeInsets.only(top: 20, right: 20),
                 padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
@@ -123,9 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onTap: () {
                     grpc.UpdateQueue();
                   },
-                  child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 20),
-                      child: Icon(Icons.arrow_upward)),
+                  child: Icon(Icons.arrow_upward),
                 )),
           ),
         ),
@@ -154,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   bool _queueing = false;
-  Widget _yourQueue() {
+  Widget _yourQueue(BoxConstraints constraint) {
     if (_queue == null) {
       return GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -169,7 +170,8 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         child: Container(
           alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(vertical: 20),
+          width: constraint.maxWidth,
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 5),
           child: const AutoSizeText(
             'Take Your Queue',
             maxLines: 1,
