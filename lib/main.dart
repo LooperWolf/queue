@@ -206,16 +206,24 @@ class _MyHomePageState extends State<MyHomePage> {
         behavior: HitTestBehavior.opaque,
         onTap: () async {
           if (_queueing) return;
-          showDialog(
+          final buf = await showDialog(
               context: context,
               builder: (_) {
                 return AlertDialog(
                   title: const Text("Your Name"),
-                  content: Container(child: TextField(
+                  content: Container(
+                      child: TextField(
+                    cursorColor: Colors.purple,
+                    decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            borderSide: BorderSide(color: Colors.purple[400])),
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.purple[300]))),
                     onSubmitted: (value) async {
                       _queueing = true;
                       final buf = await grpc.GetQueue(value);
-                      Navigator.pop(context);
+                      Navigator.pop(context, true);
                       setState(() {
                         _queue = buf;
                       });
@@ -223,7 +231,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   )),
                 );
               });
-
+          if (buf is! bool) {
+            final buf = await grpc.GetQueue("");
+            setState(() {
+              _queue = buf;
+            });
+          }
           _queueing = false;
         },
         child: Container(
