@@ -34,6 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Timer loopUpdater;
   // double _screenWidth;
   double _screenHeight;
+  Map<String, int> queueList = {};
   MediaQueryData get queryData => MediaQuery.of(context);
 
   @override
@@ -50,18 +51,26 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _queuelist() {
     final buf = queueList.entries.toList();
-    print('test ${buf[0]}');
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
-      height: _screenHeight,
-      width: 200,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          for (var i = 0; i < queueList.length; i++)
-            _queuelistRow(buf[i].key, buf[i].value, i)
-        ],
+      decoration: BoxDecoration(border: Border.all()),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              color: Colors.purple[300],
+              child: const Text(
+                "Current Queue List",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            for (var i = 0; i < queueList.length; i++)
+              _queuelistRow(buf[i].key, buf[i].value, i)
+          ],
+        ),
       ),
     );
   }
@@ -69,19 +78,18 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _queuelistRow(String name, int queue, int index) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-      color: index % 2 == 0 ? Colors.white : Colors.grey[200],
+      color: index % 2 == 0 ? Colors.white : Colors.grey[400],
       child: Text("$name: $queue"),
     );
   }
 
-  Map<String, int> queueList = {};
-  void _updateQueue() async {
-    final buf = await grpc.getQueueList();
-    queueList.clear();
-    setState(() {
-      queueList = buf;
-    });
-  }
+  // void _updateQueue() async {
+  //   final buf = await grpc.getQueueList();
+  //   queueList.clear();
+  //   setState(() {
+  //     queueList = buf;
+  //   });
+  // }
 
   Widget largeScreen() {
     return Scaffold(
@@ -90,6 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
         behavior: CustomScrollBehavior(),
         child: SingleChildScrollView(
           child: Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               if (queueList.isNotEmpty) _queuelist(),
               Container(
