@@ -53,60 +53,63 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Row(
       children: [
         const Spacer(),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          height: _screenHeight,
-          width: 200,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                  child: const AutoSizeText(
-                    'Current Queue',
-                    maxLines: 1,
-                    style: TextStyle(fontSize: 40),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.black54,
-                  ),
-                  child: AutoSizeText(
-                    _currentQueue.toString(),
-                    maxLines: 1,
-                    style: const TextStyle(fontSize: 100, color: Colors.white),
-                  ),
-                ),
-              ),
-              Flexible(
-                child: Container(
-                    margin: const EdgeInsets.only(top: 20),
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: Colors.black26,
-                        )),
-                    constraints: const BoxConstraints(
-                      maxHeight: 100,
+        Flexible(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            height: _screenHeight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 10),
+                    child: const AutoSizeText(
+                      'Current Queue',
+                      maxLines: 1,
+                      style: TextStyle(fontSize: 40),
                     ),
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 1000),
-                      reverseDuration: const Duration(milliseconds: 50),
-                      child: LayoutBuilder(builder: (context, constraint) {
-                        return _yourQueue(constraint);
-                      }),
-                    )),
-              ),
-            ],
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding:
+                        const EdgeInsets.only(top: 20, left: 20, right: 20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.black54,
+                    ),
+                    child: AutoSizeText(
+                      _currentQueue.toString(),
+                      maxLines: 1,
+                      style:
+                          const TextStyle(fontSize: 100, color: Colors.white),
+                    ),
+                  ),
+                ),
+                Flexible(
+                  child: Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: Colors.black26,
+                          )),
+                      constraints: const BoxConstraints(
+                        maxHeight: 100,
+                      ),
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 1000),
+                        reverseDuration: const Duration(milliseconds: 50),
+                        child: LayoutBuilder(builder: (context, constraint) {
+                          return _yourQueue(constraint);
+                        }),
+                      )),
+                ),
+              ],
+            ),
           ),
         ),
         Expanded(
