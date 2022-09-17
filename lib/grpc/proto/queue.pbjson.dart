@@ -76,11 +76,23 @@ const LoadQueueResponse$json = const {
   '1': 'LoadQueueResponse',
   '2': const [
     const {'1': 'Queue', '3': 1, '4': 1, '5': 13, '10': 'Queue'},
+    const {'1': 'queuelist', '3': 2, '4': 3, '5': 11, '6': '.LoadQueueResponse.QueuelistEntry', '10': 'queuelist'},
   ],
+  '3': const [LoadQueueResponse_QueuelistEntry$json],
+};
+
+@$core.Deprecated('Use loadQueueResponseDescriptor instead')
+const LoadQueueResponse_QueuelistEntry$json = const {
+  '1': 'QueuelistEntry',
+  '2': const [
+    const {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 13, '10': 'value'},
+  ],
+  '7': const {'7': true},
 };
 
 /// Descriptor for `LoadQueueResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List loadQueueResponseDescriptor = $convert.base64Decode('ChFMb2FkUXVldWVSZXNwb25zZRIUCgVRdWV1ZRgBIAEoDVIFUXVldWU=');
+final $typed_data.Uint8List loadQueueResponseDescriptor = $convert.base64Decode('ChFMb2FkUXVldWVSZXNwb25zZRIUCgVRdWV1ZRgBIAEoDVIFUXVldWUSPwoJcXVldWVsaXN0GAIgAygLMiEuTG9hZFF1ZXVlUmVzcG9uc2UuUXVldWVsaXN0RW50cnlSCXF1ZXVlbGlzdBo8Cg5RdWV1ZWxpc3RFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoDVIFdmFsdWU6AjgB');
 @$core.Deprecated('Use getQueueRequestDescriptor instead')
 const GetQueueRequest$json = const {
   '1': 'GetQueueRequest',

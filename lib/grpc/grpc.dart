@@ -20,9 +20,9 @@ class Grpc {
     return buf.queuelist;
   }
 
-  Future<int> LoadQueue() async {
+  Future<LoadQueueResponse> LoadQueue() async {
     final buf = await _client.loadQueue(LoadQueueRequest());
-    return buf.queue;
+    return buf;
   }
 
   Future<int> GetQueue(String name) async {

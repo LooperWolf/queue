@@ -227,16 +227,21 @@ class LoadQueueRequest extends $pb.GeneratedMessage {
 class LoadQueueResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LoadQueueResponse', createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Queue', $pb.PbFieldType.OU3, protoName: 'Queue')
+    ..m<$core.String, $core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'queuelist', entryClassName: 'LoadQueueResponse.QueuelistEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
   LoadQueueResponse._() : super();
   factory LoadQueueResponse({
     $core.int? queue,
+    $core.Map<$core.String, $core.int>? queuelist,
   }) {
     final _result = create();
     if (queue != null) {
       _result.queue = queue;
+    }
+    if (queuelist != null) {
+      _result.queuelist.addAll(queuelist);
     }
     return _result;
   }
@@ -269,6 +274,9 @@ class LoadQueueResponse extends $pb.GeneratedMessage {
   $core.bool hasQueue() => $_has(0);
   @$pb.TagNumber(1)
   void clearQueue() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.Map<$core.String, $core.int> get queuelist => $_getMap(1);
 }
 
 class GetQueueRequest extends $pb.GeneratedMessage {
