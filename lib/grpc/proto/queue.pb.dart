@@ -9,6 +9,134 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+class QueueListRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'QueueListRequest', createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  QueueListRequest._() : super();
+  factory QueueListRequest() => create();
+  factory QueueListRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory QueueListRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  QueueListRequest clone() => QueueListRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  QueueListRequest copyWith(void Function(QueueListRequest) updates) => super.copyWith((message) => updates(message as QueueListRequest)) as QueueListRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static QueueListRequest create() => QueueListRequest._();
+  QueueListRequest createEmptyInstance() => create();
+  static $pb.PbList<QueueListRequest> createRepeated() => $pb.PbList<QueueListRequest>();
+  @$core.pragma('dart2js:noInline')
+  static QueueListRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<QueueListRequest>(create);
+  static QueueListRequest? _defaultInstance;
+}
+
+class QueueListResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'QueueListResponse', createEmptyInstance: create)
+    ..m<$core.String, $core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'queuelist', entryClassName: 'QueueListResponse.QueuelistEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  QueueListResponse._() : super();
+  factory QueueListResponse({
+    $core.Map<$core.String, $core.int>? queuelist,
+  }) {
+    final _result = create();
+    if (queuelist != null) {
+      _result.queuelist.addAll(queuelist);
+    }
+    return _result;
+  }
+  factory QueueListResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory QueueListResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  QueueListResponse clone() => QueueListResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  QueueListResponse copyWith(void Function(QueueListResponse) updates) => super.copyWith((message) => updates(message as QueueListResponse)) as QueueListResponse; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static QueueListResponse create() => QueueListResponse._();
+  QueueListResponse createEmptyInstance() => create();
+  static $pb.PbList<QueueListResponse> createRepeated() => $pb.PbList<QueueListResponse>();
+  @$core.pragma('dart2js:noInline')
+  static QueueListResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<QueueListResponse>(create);
+  static QueueListResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.Map<$core.String, $core.int> get queuelist => $_getMap(0);
+}
+
+class ResetQueueRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ResetQueueRequest', createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  ResetQueueRequest._() : super();
+  factory ResetQueueRequest() => create();
+  factory ResetQueueRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ResetQueueRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ResetQueueRequest clone() => ResetQueueRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ResetQueueRequest copyWith(void Function(ResetQueueRequest) updates) => super.copyWith((message) => updates(message as ResetQueueRequest)) as ResetQueueRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ResetQueueRequest create() => ResetQueueRequest._();
+  ResetQueueRequest createEmptyInstance() => create();
+  static $pb.PbList<ResetQueueRequest> createRepeated() => $pb.PbList<ResetQueueRequest>();
+  @$core.pragma('dart2js:noInline')
+  static ResetQueueRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ResetQueueRequest>(create);
+  static ResetQueueRequest? _defaultInstance;
+}
+
+class ResetQueueResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ResetQueueResponse', createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  ResetQueueResponse._() : super();
+  factory ResetQueueResponse() => create();
+  factory ResetQueueResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ResetQueueResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ResetQueueResponse clone() => ResetQueueResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ResetQueueResponse copyWith(void Function(ResetQueueResponse) updates) => super.copyWith((message) => updates(message as ResetQueueResponse)) as ResetQueueResponse; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ResetQueueResponse create() => ResetQueueResponse._();
+  ResetQueueResponse createEmptyInstance() => create();
+  static $pb.PbList<ResetQueueResponse> createRepeated() => $pb.PbList<ResetQueueResponse>();
+  @$core.pragma('dart2js:noInline')
+  static ResetQueueResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ResetQueueResponse>(create);
+  static ResetQueueResponse? _defaultInstance;
+}
+
 class UpdateQueueRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UpdateQueueRequest', createEmptyInstance: create)
     ..hasRequiredFields = false

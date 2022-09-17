@@ -51,128 +51,268 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget largeScreen() {
     return Scaffold(
         body: Center(
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10),
-        width: 200,
-        height: _screenHeight,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      child: SingleChildScrollView(
+        child: Wrap(
           children: [
-            Flexible(
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                child: const AutoSizeText(
-                  'Current Queue',
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 40),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.black54,
-                ),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    AutoSizeText(
-                      _currentQueue.toString(),
-                      maxLines: 1,
-                      style:
-                          const TextStyle(fontSize: 100, color: Colors.white),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              height: _screenHeight,
+              width: 200,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 10),
+                      child: const AutoSizeText(
+                        'Current Queue',
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 40),
+                      ),
                     ),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: Container(
-                          margin: const EdgeInsets.only(top: 6, right: 6),
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 5),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: Colors.black26,
-                              )),
-                          child: GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              grpc.UpdateQueue();
-                            },
-                            child: const Icon(Icons.arrow_upward),
-                          )),
-                    )
-                  ],
-                ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.black54,
+                      ),
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          AutoSizeText(
+                            _currentQueue.toString(),
+                            maxLines: 1,
+                            style: const TextStyle(
+                                fontSize: 100, color: Colors.white),
+                          ),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: Column(
+                              children: [
+                                Container(
+                                    margin:
+                                        const EdgeInsets.only(top: 6, right: 6),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 5, horizontal: 5),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(
+                                          color: Colors.black26,
+                                        )),
+                                    child: GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: () {
+                                        grpc.UpdateQueue();
+                                      },
+                                      child: const Icon(Icons.arrow_upward),
+                                    )),
+                                Container(
+                                    margin:
+                                        const EdgeInsets.only(top: 6, right: 6),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 5, horizontal: 5),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(
+                                          color: Colors.black26,
+                                        )),
+                                    child: GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: () async {
+                                        await grpc.resetQueue();
+                                        final buf = await grpc.LoadQueue();
+                                        setState(() => _currentQueue = buf);
+                                      },
+                                      child: const Icon(Icons.replay_outlined),
+                                    )),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    child: Container(
+                        margin: const EdgeInsets.only(top: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: Colors.black26,
+                            )),
+                        constraints: const BoxConstraints(
+                          maxHeight: 100,
+                        ),
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 1000),
+                          reverseDuration: const Duration(milliseconds: 50),
+                          child: LayoutBuilder(builder: (context, constraint) {
+                            return _yourQueue(constraint);
+                          }),
+                        )),
+                  ),
+                ],
               ),
             ),
-            Flexible(
-              child: Container(
-                  margin: const EdgeInsets.only(top: 20),
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: Colors.black26,
-                      )),
-                  constraints: const BoxConstraints(
-                    maxHeight: 100,
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              height: _screenHeight,
+              width: 200,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 10),
+                      child: const AutoSizeText(
+                        'Current Queue',
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 40),
+                      ),
+                    ),
                   ),
-                  child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 1000),
-                    reverseDuration: const Duration(milliseconds: 50),
-                    child: LayoutBuilder(builder: (context, constraint) {
-                      return _yourQueue(constraint);
-                    }),
-                  )),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.black54,
+                      ),
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          AutoSizeText(
+                            _currentQueue.toString(),
+                            maxLines: 1,
+                            style: const TextStyle(
+                                fontSize: 100, color: Colors.white),
+                          ),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: Column(
+                              children: [
+                                Container(
+                                    margin:
+                                        const EdgeInsets.only(top: 6, right: 6),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 5, horizontal: 5),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(
+                                          color: Colors.black26,
+                                        )),
+                                    child: GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: () {
+                                        grpc.UpdateQueue();
+                                      },
+                                      child: const Icon(Icons.arrow_upward),
+                                    )),
+                                Container(
+                                    margin:
+                                        const EdgeInsets.only(top: 6, right: 6),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 5, horizontal: 5),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(
+                                          color: Colors.black26,
+                                        )),
+                                    child: GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: () async {
+                                        await grpc.resetQueue();
+                                        final buf = await grpc.LoadQueue();
+                                        setState(() => _currentQueue = buf);
+                                      },
+                                      child: const Icon(Icons.replay_outlined),
+                                    )),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    child: Container(
+                        margin: const EdgeInsets.only(top: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: Colors.black26,
+                            )),
+                        constraints: const BoxConstraints(
+                          maxHeight: 100,
+                        ),
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 1000),
+                          reverseDuration: const Duration(milliseconds: 50),
+                          child: LayoutBuilder(builder: (context, constraint) {
+                            return _yourQueue(constraint);
+                          }),
+                        )),
+                  ),
+                  // Flexible(
+                  //   child: Container(
+                  //       margin: const EdgeInsets.only(top: 20),
+                  //       padding: const EdgeInsets.symmetric(horizontal: 20),
+                  //       decoration: BoxDecoration(
+                  //           borderRadius: BorderRadius.circular(20),
+                  //           border: Border.all(
+                  //             color: Colors.black26,
+                  //           )),
+                  //       constraints: const BoxConstraints(
+                  //         maxHeight: 100,
+                  //       ),
+                  //       child: AnimatedSwitcher(
+                  //         duration: const Duration(milliseconds: 1000),
+                  //         reverseDuration: const Duration(milliseconds: 50),
+                  //         child: LayoutBuilder(builder: (context, constraint) {
+                  //           return GestureDetector(
+                  //             behavior: HitTestBehavior.opaque,
+                  //             onTap: () async {
+                  //               if (_queueing) return;
+                  //               _queueing = true;
+                  //               final buf = await grpc.GetQueue();
+                  //               setState(() {
+                  //                 _queue = buf;
+                  //               });
+                  //               _queueing = false;
+                  //             },
+                  //             child: Container(
+                  //               alignment: Alignment.center,
+                  //               width: constraint.maxWidth,
+                  //               padding: const EdgeInsets.symmetric(
+                  //                   vertical: 10, horizontal: 5),
+                  //               child: const AutoSizeText(
+                  //                 'Reset Queue',
+                  //                 maxLines: 2,
+                  //                 textAlign: TextAlign.center,
+                  //                 style: TextStyle(fontSize: 40),
+                  //               ),
+                  //             ),
+                  //           );
+                  //         }),
+                  //       )),
+                  // ),
+                ],
+              ),
             ),
-            // Flexible(
-            //   child: Container(
-            //       margin: const EdgeInsets.only(top: 20),
-            //       padding: const EdgeInsets.symmetric(horizontal: 20),
-            //       decoration: BoxDecoration(
-            //           borderRadius: BorderRadius.circular(20),
-            //           border: Border.all(
-            //             color: Colors.black26,
-            //           )),
-            //       constraints: const BoxConstraints(
-            //         maxHeight: 100,
-            //       ),
-            //       child: AnimatedSwitcher(
-            //         duration: const Duration(milliseconds: 1000),
-            //         reverseDuration: const Duration(milliseconds: 50),
-            //         child: LayoutBuilder(builder: (context, constraint) {
-            //           return GestureDetector(
-            //             behavior: HitTestBehavior.opaque,
-            //             onTap: () async {
-            //               if (_queueing) return;
-            //               _queueing = true;
-            //               final buf = await grpc.GetQueue();
-            //               setState(() {
-            //                 _queue = buf;
-            //               });
-            //               _queueing = false;
-            //             },
-            //             child: Container(
-            //               alignment: Alignment.center,
-            //               width: constraint.maxWidth,
-            //               padding: const EdgeInsets.symmetric(
-            //                   vertical: 10, horizontal: 5),
-            //               child: const AutoSizeText(
-            //                 'Reset Queue',
-            //                 maxLines: 2,
-            //                 textAlign: TextAlign.center,
-            //                 style: TextStyle(fontSize: 40),
-            //               ),
-            //             ),
-            //           );
-            //         }),
-            //       )),
-            // ),
           ],
         ),
       ),

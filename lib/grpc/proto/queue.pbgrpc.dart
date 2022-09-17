@@ -20,6 +20,18 @@ class QueueApiClient extends $grpc.Client {
           ($0.LoadQueueRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.LoadQueueResponse.fromBuffer(value));
+  static final _$getQueueList =
+      $grpc.ClientMethod<$0.QueueListRequest, $0.QueueListResponse>(
+          '/QueueApi/GetQueueList',
+          ($0.QueueListRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.QueueListResponse.fromBuffer(value));
+  static final _$resetQueue =
+      $grpc.ClientMethod<$0.ResetQueueRequest, $0.ResetQueueResponse>(
+          '/QueueApi/ResetQueue',
+          ($0.ResetQueueRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.ResetQueueResponse.fromBuffer(value));
   static final _$getQueue =
       $grpc.ClientMethod<$0.GetQueueRequest, $0.GetQueueResponse>(
           '/QueueApi/GetQueue',
@@ -48,6 +60,18 @@ class QueueApiClient extends $grpc.Client {
       $0.LoadQueueRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$loadQueue, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.QueueListResponse> getQueueList(
+      $0.QueueListRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getQueueList, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.ResetQueueResponse> resetQueue(
+      $0.ResetQueueRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$resetQueue, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.GetQueueResponse> getQueue($0.GetQueueRequest request,
@@ -81,6 +105,20 @@ abstract class QueueApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.LoadQueueRequest.fromBuffer(value),
         ($0.LoadQueueResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.QueueListRequest, $0.QueueListResponse>(
+        'GetQueueList',
+        getQueueList_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.QueueListRequest.fromBuffer(value),
+        ($0.QueueListResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.ResetQueueRequest, $0.ResetQueueResponse>(
+        'ResetQueue',
+        resetQueue_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.ResetQueueRequest.fromBuffer(value),
+        ($0.ResetQueueResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.GetQueueRequest, $0.GetQueueResponse>(
         'GetQueue',
         getQueue_Pre,
@@ -113,6 +151,16 @@ abstract class QueueApiServiceBase extends $grpc.Service {
     return loadQueue(call, await request);
   }
 
+  $async.Future<$0.QueueListResponse> getQueueList_Pre($grpc.ServiceCall call,
+      $async.Future<$0.QueueListRequest> request) async {
+    return getQueueList(call, await request);
+  }
+
+  $async.Future<$0.ResetQueueResponse> resetQueue_Pre($grpc.ServiceCall call,
+      $async.Future<$0.ResetQueueRequest> request) async {
+    return resetQueue(call, await request);
+  }
+
   $async.Future<$0.GetQueueResponse> getQueue_Pre(
       $grpc.ServiceCall call, $async.Future<$0.GetQueueRequest> request) async {
     return getQueue(call, await request);
@@ -130,6 +178,10 @@ abstract class QueueApiServiceBase extends $grpc.Service {
 
   $async.Future<$0.LoadQueueResponse> loadQueue(
       $grpc.ServiceCall call, $0.LoadQueueRequest request);
+  $async.Future<$0.QueueListResponse> getQueueList(
+      $grpc.ServiceCall call, $0.QueueListRequest request);
+  $async.Future<$0.ResetQueueResponse> resetQueue(
+      $grpc.ServiceCall call, $0.ResetQueueRequest request);
   $async.Future<$0.GetQueueResponse> getQueue(
       $grpc.ServiceCall call, $0.GetQueueRequest request);
   $async.Future<$0.UpdateQueueResponse> updateQueue(

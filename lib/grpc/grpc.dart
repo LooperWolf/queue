@@ -11,6 +11,15 @@ class Grpc {
   QueueApiClient _client;
   factory Grpc.instance() => _instance;
   Grpc._internal();
+  Future<void> resetQueue() async {
+    await _client.resetQueue(ResetQueueRequest());
+  }
+
+  Future<Map<String, int>> getQueueList() async {
+    final buf = await _client.getQueueList(QueueListRequest());
+    return buf.queuelist;
+  }
+
   Future<int> LoadQueue() async {
     final buf = await _client.loadQueue(LoadQueueRequest());
     return buf.queue;
