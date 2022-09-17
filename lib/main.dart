@@ -238,13 +238,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: MaterialButton(onPressed: () async {
-                          final buf = await grpc.GetQueue(_value);
-                          Navigator.pop(context, true);
-                          setState(() {
-                            _queue = buf;
-                          });
-                        }),
+                        child: MaterialButton(
+                            color: Colors.purple,
+                            child: const Text("Confirm"),
+                            onPressed: () async {
+                              final buf = await grpc.GetQueue(_value);
+                              Navigator.pop(context, true);
+                              setState(() {
+                                _queue = buf;
+                              });
+                            }),
                       )
                     ],
                   )),
