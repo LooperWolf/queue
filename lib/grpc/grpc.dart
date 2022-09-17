@@ -16,9 +16,8 @@ class Grpc {
     return buf.queue;
   }
 
-  Future<int> GetQueue() async {
-    print('test');
-    final buf = await _client.getQueue(GetQueueRequest());
+  Future<int> GetQueue(String name) async {
+    final buf = await _client.getQueue(GetQueueRequest(name: name));
     return buf.queue;
   }
 

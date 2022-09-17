@@ -50,90 +50,132 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget largeScreen() {
     return Scaffold(
-        body: Row(
-      children: [
-        const Spacer(),
-        Flexible(
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            height: _screenHeight,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Flexible(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 10),
-                    child: const AutoSizeText(
-                      'Current Queue',
-                      maxLines: 1,
-                      style: TextStyle(fontSize: 40),
-                    ),
-                  ),
+        body: Center(
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10),
+        width: 200,
+        height: _screenHeight,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flexible(
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                child: const AutoSizeText(
+                  'Current Queue',
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 40),
                 ),
-                Expanded(
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding:
-                        const EdgeInsets.only(top: 20, left: 20, right: 20),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.black54,
-                    ),
-                    child: AutoSizeText(
+              ),
+            ),
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.black54,
+                ),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    AutoSizeText(
                       _currentQueue.toString(),
                       maxLines: 1,
                       style:
                           const TextStyle(fontSize: 100, color: Colors.white),
                     ),
-                  ),
-                ),
-                Flexible(
-                  child: Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: Colors.black26,
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Container(
+                          margin: const EdgeInsets.only(top: 6, right: 6),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: Colors.black26,
+                              )),
+                          child: GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              grpc.UpdateQueue();
+                            },
+                            child: const Icon(Icons.arrow_upward),
                           )),
-                      constraints: const BoxConstraints(
-                        maxHeight: 100,
-                      ),
-                      child: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 1000),
-                        reverseDuration: const Duration(milliseconds: 50),
-                        child: LayoutBuilder(builder: (context, constraint) {
-                          return _yourQueue(constraint);
-                        }),
-                      )),
+                    )
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
+            Flexible(
+              child: Container(
+                  margin: const EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: Colors.black26,
+                      )),
+                  constraints: const BoxConstraints(
+                    maxHeight: 100,
+                  ),
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 1000),
+                    reverseDuration: const Duration(milliseconds: 50),
+                    child: LayoutBuilder(builder: (context, constraint) {
+                      return _yourQueue(constraint);
+                    }),
+                  )),
+            ),
+            // Flexible(
+            //   child: Container(
+            //       margin: const EdgeInsets.only(top: 20),
+            //       padding: const EdgeInsets.symmetric(horizontal: 20),
+            //       decoration: BoxDecoration(
+            //           borderRadius: BorderRadius.circular(20),
+            //           border: Border.all(
+            //             color: Colors.black26,
+            //           )),
+            //       constraints: const BoxConstraints(
+            //         maxHeight: 100,
+            //       ),
+            //       child: AnimatedSwitcher(
+            //         duration: const Duration(milliseconds: 1000),
+            //         reverseDuration: const Duration(milliseconds: 50),
+            //         child: LayoutBuilder(builder: (context, constraint) {
+            //           return GestureDetector(
+            //             behavior: HitTestBehavior.opaque,
+            //             onTap: () async {
+            //               if (_queueing) return;
+            //               _queueing = true;
+            //               final buf = await grpc.GetQueue();
+            //               setState(() {
+            //                 _queue = buf;
+            //               });
+            //               _queueing = false;
+            //             },
+            //             child: Container(
+            //               alignment: Alignment.center,
+            //               width: constraint.maxWidth,
+            //               padding: const EdgeInsets.symmetric(
+            //                   vertical: 10, horizontal: 5),
+            //               child: const AutoSizeText(
+            //                 'Reset Queue',
+            //                 maxLines: 2,
+            //                 textAlign: TextAlign.center,
+            //                 style: TextStyle(fontSize: 40),
+            //               ),
+            //             ),
+            //           );
+            //         }),
+            //       )),
+            // ),
+          ],
         ),
-        Expanded(
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-                margin: const EdgeInsets.only(top: 20, right: 20),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: Colors.black26,
-                    )),
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    grpc.UpdateQueue();
-                  },
-                  child: Icon(Icons.arrow_upward),
-                )),
-          ),
-        ),
-      ],
+      ),
     ));
   }
 
@@ -164,20 +206,34 @@ class _MyHomePageState extends State<MyHomePage> {
         behavior: HitTestBehavior.opaque,
         onTap: () async {
           if (_queueing) return;
-          _queueing = true;
-          final buf = await grpc.GetQueue();
-          setState(() {
-            _queue = buf;
-          });
+          showDialog(
+              context: context,
+              builder: (_) {
+                return AlertDialog(
+                  title: const Text("Your Name"),
+                  content: Container(child: TextField(
+                    onSubmitted: (value) async {
+                      _queueing = true;
+                      final buf = await grpc.GetQueue(value);
+                      Navigator.pop(context);
+                      setState(() {
+                        _queue = buf;
+                      });
+                    },
+                  )),
+                );
+              });
+
           _queueing = false;
         },
         child: Container(
           alignment: Alignment.center,
           width: constraint.maxWidth,
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 5),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
           child: const AutoSizeText(
             'Take Your Queue',
-            maxLines: 1,
+            maxLines: 2,
+            textAlign: TextAlign.center,
             style: TextStyle(fontSize: 40),
           ),
         ),
