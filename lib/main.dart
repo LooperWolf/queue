@@ -206,28 +206,47 @@ class _MyHomePageState extends State<MyHomePage> {
         behavior: HitTestBehavior.opaque,
         onTap: () async {
           if (_queueing) return;
+          _queueing = true;
           final buf = await showDialog(
               context: context,
               builder: (_) {
+                String _value = "";
                 return AlertDialog(
                   title: const Text("Your Name"),
                   content: Container(
-                      child: TextField(
-                    cursorColor: Colors.purple,
-                    decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            borderSide: BorderSide(color: Colors.purple[400])),
-                        enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[300]))),
-                    onSubmitted: (value) async {
-                      _queueing = true;
-                      final buf = await grpc.GetQueue(value);
-                      Navigator.pop(context, true);
-                      setState(() {
-                        _queue = buf;
-                      });
-                    },
+                      child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextField(
+                        onChanged: (value) => _value = value,
+                        cursorColor: Colors.purple,
+                        textInputAction: TextInputAction.done,
+                        decoration: InputDecoration(
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.purple[400])),
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.grey[350]))),
+                        onSubmitted: (value) async {
+                          final buf = await grpc.GetQueue(value);
+                          Navigator.pop(context, true);
+                          setState(() {
+                            _queue = buf;
+                          });
+                        },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: MaterialButton(onPressed: () async {
+                          final buf = await grpc.GetQueue(_value);
+                          Navigator.pop(context, true);
+                          setState(() {
+                            _queue = buf;
+                          });
+                        }),
+                      )
+                    ],
                   )),
                 );
               });
