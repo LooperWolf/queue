@@ -240,7 +240,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: MaterialButton(
                             color: Colors.purple,
-                            child: const Text("Confirm"),
+                            child: const Text(
+                              "Confirm",
+                              style: TextStyle(color: Colors.white),
+                            ),
                             onPressed: () async {
                               final buf = await grpc.GetQueue(_value);
                               Navigator.pop(context, true);
