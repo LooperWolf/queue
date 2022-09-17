@@ -32,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _queue;
   int _currentQueue = 0;
   Timer loopUpdater;
-  double _screenWidth;
+  // double _screenWidth;
   double _screenHeight;
   MediaQueryData get queryData => MediaQuery.of(context);
 
@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _screenHeight = queryData.size.height;
-    _screenWidth = queryData.size.width;
+    // _screenWidth = queryData.size.width;
   }
 
   @override
